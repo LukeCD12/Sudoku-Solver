@@ -1,5 +1,6 @@
 #ifndef sudoku
 #define sudoku
+//defines file paths to be put into array
 #define filename0 "boards/s01a.txt"
 #define filename1 "boards/s01b.txt"
 #define filename2 "boards/s01c.txt"
@@ -12,12 +13,14 @@
 #define filename9 "boards/s16.txt"
 #define userfile "boards/user.txt"
 
+//defines Board structure list
 typedef struct BoardNode{
     char filename[20];
     int board[9][9];
     struct BoardNode *nextBoard;
 }BoardNode;
 
+//prototypes
 void printBoard(BoardNode **board);
 void getBoard(BoardNode **board);
 BoardNode *printChoice(char choice[], BoardNode **board);

@@ -25,6 +25,9 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
+// Gets board from user
+// and calls board
+// allocation/insertion
 void getBoard(BoardNode **board) {
     BoardNode *pNew = NULL;
     int i, hasBoard = 0, choice = -12, j;
@@ -92,6 +95,8 @@ void getBoard(BoardNode **board) {
     }
 }
 
+//allocates BoardNode and fills
+//with user choice of puzzle
 BoardNode *allocateNode(char choice[]) {
     BoardNode *pNew = (BoardNode *)malloc(sizeof(BoardNode));
     pNew -> nextBoard = NULL;
@@ -112,6 +117,8 @@ BoardNode *allocateNode(char choice[]) {
     return pNew;
 }
 
+//prints the user initial choice to
+//see if it is the puzzle they want
 BoardNode *printChoice(char choice[], BoardNode **board) {
     boardFile = fopen(choice, "r");
     BoardNode *pNew = allocateNode(choice);
@@ -126,6 +133,11 @@ BoardNode *printChoice(char choice[], BoardNode **board) {
     return pNew;
 }
 
+//inserts chosen board into
+//Board list
+//Note: currently only one board ever in list
+//only set up in case I want to have program
+//solve more than 1 puzzle at a time
 void insertList(BoardNode **board, BoardNode *pNew) {
     BoardNode *p = NULL;
     if (*board == NULL) {
@@ -136,6 +148,7 @@ void insertList(BoardNode **board, BoardNode *pNew) {
     p -> nextBoard = pNew;
 }
 
+//prints current board layout
 void printBoard(BoardNode **board) {
     BoardNode *p = NULL;
     int i, j;
@@ -149,6 +162,7 @@ void printBoard(BoardNode **board) {
     }
 }
 
+//solves the sudoku board
 int solvedBoard(BoardNode **board) {
     int row, col, num;
     BoardNode *p = *board;
@@ -168,10 +182,15 @@ int solvedBoard(BoardNode **board) {
     return 0;
 }
 
+//checks if a number is valid from 3 standpoints
+//1 - its 3x3 box
+//2 - its column
+//3 - its row
 int isSafe(BoardNode *board, int row, int col, int num) {
     return safeCol(board, col, num) && safeRow(board, row, num) && safeBox(board,row - row % 3 ,col - col % 3 ,num) && board->board[row][col] == 0;
 }
 
+//checks if a number is valid in its grid
 int safeBox(BoardNode *board, int rowStart, int colStart, int num) {
     int row, col;
     for (row = 0; row < 3; row++) {
@@ -184,6 +203,7 @@ int safeBox(BoardNode *board, int rowStart, int colStart, int num) {
     return 1;
 }
 
+//checks if a number is valid in its row
 int safeRow(BoardNode *board, int row, int num) {
     int col;
     for (col = 0; col < 9; col++) {
@@ -194,6 +214,7 @@ int safeRow(BoardNode *board, int row, int num) {
     return 1;
 }
 
+//checks if a number is valid in its column
 int safeCol(BoardNode *board, int col, int num) {
     int row;
     for (row = 0; row < 9; row++) {
@@ -204,6 +225,7 @@ int safeCol(BoardNode *board, int col, int num) {
     return 1;
 }
 
+//checks if a space is empty (0 is empty)
 int isEmpty(BoardNode *board, int *row, int *col) {
     int r, c;
     for (r = 0; r < 9; r++) {

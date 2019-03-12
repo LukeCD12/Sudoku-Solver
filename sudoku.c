@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
         printf("Solved:\n");
         printBoard(&board);
         diff_t = difftime(end_t, start_t);
-        printf("Took %.2lf seconds to solve", diff_t);
+        printf("Took %.2lf seconds to solve\n", diff_t);
     }
     else
         printf("No solution");
